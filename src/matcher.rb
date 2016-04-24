@@ -22,11 +22,12 @@ class TypeMatcher < Matcher
 end
 
 class ListMatcher < Matcher
-  attr_accessor :boolean, :i
+  attr_accessor :boolean
 
   def initialize(list,*boolean)
    @parameter = list
-   @boolean = boolean ? true : false
+   @boolean =  boolean ? boolean[0] : true
+
   end
 
   def call(array)
@@ -40,10 +41,6 @@ class ListMatcher < Matcher
   end
 
   def compare(an_array,other_array)
-  	@i = 0
-  	an_array.all? { |element|
-  		element.call(other_array[i])
-        @i += 1 
-    }
+    an_array.collect { |elem| elem.call(other_array[an_array.index(elem)])  }.all?
   end
 end

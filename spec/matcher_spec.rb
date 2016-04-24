@@ -28,7 +28,20 @@ describe 'My behaviour' do
     expect(list([val(1),val(2),val(3)],true).call([1,2,3])).to be true
   end
 
-  it 'listkcxfgjklxf responds to a call' do
+  it 'list responds to a call (sin segundo parametro)' do
     expect(list([val(1),val(2),val(3)]).call([1,2,3])).to be true
   end
+
+  it 'list responds to a call (con menos elementos)' do
+    expect(list([val(1),val(2),val(3)],false).call([1,2,3,4])).to be true
+  end
+
+  it 'falla el list por orden de los elementos' do
+    expect(list([val(2),val(1),val(3)]).call([10,2,3])).to be false
+  end
+
+  it 'se llama con dos val y un type' do
+    expect(list([val(2),type(Integer),val(3)]).call([2,5,3])).to be true
+  end
+
 end
