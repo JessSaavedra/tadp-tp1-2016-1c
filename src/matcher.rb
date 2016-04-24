@@ -44,3 +44,17 @@ class ListMatcher < Matcher
     an_array.collect { |elem| elem.call(other_array[an_array.index(elem)])  }.all?
   end
 end
+
+class DuckMatcher < Matcher
+  attr_accessor :methods_list
+
+  def initialize(*methods)
+    self.methods_list= methods
+  end
+
+  def call(an_object)
+    self.methods_list.all? do | method |
+      an_object.public_methods.include? method
+    end
+  end
+end

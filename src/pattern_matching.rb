@@ -10,4 +10,8 @@ module PatternMatching
   def list(list,*boolean)
   	ListMatcher.new(list,*boolean)
   end
+
+  def duck(*methods)
+    DuckMatcher.new(*methods)
+  end
 end

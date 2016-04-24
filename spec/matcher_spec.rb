@@ -8,6 +8,18 @@ end
 
 describe 'My behaviour' do
 
+  class ExampleClass
+    def a_method
+      'hello!'
+    end
+
+    def another_method
+      'bye!'
+    end
+  end
+
+  exampleObject = ExampleClass.new
+
   it 'val(5) responds to a call(5)' do
     expect(val(5).call(5)).to be true
   end
@@ -42,6 +54,31 @@ describe 'My behaviour' do
 
   it 'se llama con dos val y un type' do
     expect(list([val(2),type(Integer),val(3)]).call([2,5,3])).to be true
+  end
+
+  it 'objeto entiende todos los mensajes del duck y matchea' do
+    expect(duck(:a_method,:another_method).call(exampleObject)).to be true
+  end
+
+  it 'objeto no entiende un mensaje del duck y no matchea' do
+    expect(duck(:a_method,:strange_method).call(exampleObject)).to be false
+  end
+
+  it 'duck sin metodos matchea siempre' do
+    expect(duck().call(exampleObject)).to be true
+    expect(duck().call(Object.new)).to be true
+    expect(duck().call(:symbol)).to be true
+  end
+
+  it 'objeto con metodos propios de su instancia entiende mensajes del duck y matchea' do
+    def exampleObject.own_method
+      'this is mine'
+    end
+    expect(duck(:own_method,:a_method).call(exampleObject)).to be true
+  end
+
+  it 'objeto posee mensaje del duck en uno de sus ancestors y matchea' do
+    expect(duck(:to_s).call(exampleObject)).to be true
   end
 
 end
