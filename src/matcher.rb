@@ -5,6 +5,13 @@ class Matcher
    @parameter = value
   end
 
+  def and(*matchers)
+    CombinatorAnd.new(self,matchers)
+  end
+
+  def or(*matchers)
+  	CombinatorOr.new(self,matchers)
+  end
 end
 
 class ValueMatcher < Matcher
@@ -35,7 +42,6 @@ class ListMatcher < Matcher
       return false unless @parameter.size == array.size
     else
       return false if @parameter.size > array.size
-      #Lo pusimos xq 
     end
     compare(@parameter,array)
   end
@@ -49,12 +55,19 @@ class DuckMatcher < Matcher
   attr_accessor :methods_list
 
   def initialize(*methods)
-    self.methods_list= methods
+    self.methods_list = methods
   end
 
   def call(an_object)
     self.methods_list.all? do | method |
       an_object.public_methods.include? method
     end
+  end
+end
+
+class Symbol
+  def call(value)
+    # Bindear
+    return true
   end
 end
