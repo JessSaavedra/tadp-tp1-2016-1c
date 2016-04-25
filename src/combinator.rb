@@ -1,4 +1,4 @@
-class Combinator
+class Combinator < Matcher
   attr_accessor :matchers
 
   def initialize(*matchers)

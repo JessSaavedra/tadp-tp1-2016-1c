@@ -24,4 +24,8 @@ describe 'Combinators' do
   it 'combinator or con tres matchers' do
   	expect(type(String).or(val(6),duck(:+)).call(5)).to be true
   end
+
+  it 'combinator and with or' do
+    expect(type(String).and(val('hola')).or(val(5)).call(5)).to be true
+  end
 end
