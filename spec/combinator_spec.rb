@@ -8,7 +8,36 @@ RSpec.configure do |c|
 end
 
 describe 'Combinators' do
-  
+
+  it 'and de dos matchers genera un CombinatorAnd con 2 matchers' do
+    matcher_type = type(Integer)
+    matcher_val = val(5)
+
+    and_combinator = matcher_type.and(matcher_val)
+
+    expect(and_combinator.class).to be CombinatorAnd
+    expect(and_combinator.matchers).to eq [matcher_type,matcher_val]
+  end
+
+  it 'or de dos matchers genera un CombinatorOr con 2 matchers' do
+    matcher_type = type(Integer)
+    matcher_val = val(5)
+
+    or_combinator = matcher_type.or(matcher_val)
+
+    expect(or_combinator.class).to be CombinatorOr
+    expect(or_combinator.matchers).to eq [matcher_type,matcher_val]
+  end
+
+  it 'not de un matcher genera un CombinatorNot con ese matcher' do
+    a_matcher = type(Symbol)
+
+    not_combinator = a_matcher.not
+
+    expect(not_combinator.class).to be CombinatorNot
+    expect(not_combinator.matcher).to be a_matcher
+  end
+
   it 'combinator and con dos matchers' do
   	expect(type(Integer).and(val(5)).call(5)).to be true
   end
@@ -28,4 +57,21 @@ describe 'Combinators' do
   it 'combinator and with or' do
     expect(type(String).and(val('hola')).or(val(5)).call(5)).to be true
   end
+
+  it 'combinator not de matcher que no cumple' do
+    expect(type(String).not.call(5)).to be true
+  end
+
+  it 'combinator not de matcher que cumple' do
+    expect(type(String).not.call('hola')).to be false
+  end
+
+  it 'not combinator aplicado sobre un and que cumple' do
+    expect(type(Fixnum).and(duck(:-)).not.call(3)).to be false
+  end
+
+  it 'not combinator aplicado sobre un or que no cumple' do
+    expect(type(Fixnum).or(duck(:-)).not.call(:a_symbol)).to be true
+  end
+
 end

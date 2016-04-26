@@ -17,3 +17,15 @@ class CombinatorOr < Combinator
   	matchers.any? { |matcher| matcher.call(value) }
   end
 end
+
+class CombinatorNot < Matcher
+  attr_accessor :matcher
+
+  def initialize(matcher)
+    self.matcher = matcher
+  end
+
+  def call(value)
+    not self.matcher.call(value)
+  end
+end

@@ -12,6 +12,10 @@ class Matcher
   def or(*matchers)
   	CombinatorOr.new(self,matchers)
   end
+
+  def not
+    CombinatorNot.new self
+  end
 end
 
 class ValueMatcher < Matcher
