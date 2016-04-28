@@ -73,9 +73,4 @@ describe 'Combinators' do
   it 'not combinator aplicado sobre un or que no cumple' do
     expect(type(Fixnum).or(duck(:-)).not.call(:a_symbol)).to be true
   end
-
-  it 'matches with' do
-    matches?(5)
-    expect(with(val(5)){ true }).to be true
-  end
 end
