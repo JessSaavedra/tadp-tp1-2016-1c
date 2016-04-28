@@ -7,7 +7,7 @@ module PatternMatching
     proc { |param| param.is_a? value }
   end
 
-  def list(list,*boolean)
+  def list(list,boolean=true) #Si no viene nada, el default es true
   	if boolean # true o sin parametro
       proc { |array| (list.size == array.size) & list.collect { |elem| elem.call(array[list.index(elem)]) }.all? }
     else
