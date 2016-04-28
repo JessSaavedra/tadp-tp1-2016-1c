@@ -1,5 +1,4 @@
 require 'rspec'
-require_relative '../src/matcher'
 require_relative '../src/pattern_matching'
 
 RSpec.configure do |c|
@@ -47,6 +46,10 @@ describe 'Matchers' do
 
 	it 'list responds to a call (sin segundo parametro)' do
 	  expect(list([val(1),val(2),val(3)]).call([1,2,3])).to be true
+	end
+
+	it 'list does not respond to a call (sin segundo parametro y menos elementos)' do
+	  expect(list([val(1),val(2)]).call([1,2,3])).to be false
 	end
 
 	it 'list responds to a call (con menos elementos)' do

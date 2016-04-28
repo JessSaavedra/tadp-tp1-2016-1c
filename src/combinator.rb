@@ -1,31 +1,13 @@
-class Combinator < Matcher
-  attr_accessor :matchers
-
-  def initialize(*matchers)
-    @matchers = matchers.flatten
-  end
-end
-
-class CombinatorAnd < Combinator
-  def call(value)
-  	matchers.all? { |matcher| matcher.call(value) }
-  end
-end
-
-class CombinatorOr < Combinator
-  def call(value)
-  	matchers.any? { |matcher| matcher.call(value) }
-  end
-end
-
-class CombinatorNot < Matcher
-  attr_accessor :matcher
-
-  def initialize(matcher)
-    self.matcher = matcher
+class Proc
+  def and(*matchers)
+    proc { |param| matchers.concat([self]).all? do |matcher| matcher.call param end }
   end
 
-  def call(value)
-    not self.matcher.call(value)
+  def or(*matchers)
+    proc { |param| matchers.concat([self]).any? do |matcher| matcher.call param end }
+  end
+
+  def not
+    proc { |param| not self.call param }
   end
 end
