@@ -1,4 +1,6 @@
 module PatternMatching
+	attr_accessor :object
+
   def val(value)
   	proc { |param| param == value }
   end
@@ -17,6 +19,14 @@ module PatternMatching
 
   def duck(*methods)
     proc { |object| methods.all? do |method| object.public_methods.include? method end }
+  end
+
+  def with(*matchers,&block)
+  	block.call if matchers.all? do |matcher| matcher.call(self.object) end
+  end 
+
+  def matches?(x)
+  	self.object= x
   end
 end
 

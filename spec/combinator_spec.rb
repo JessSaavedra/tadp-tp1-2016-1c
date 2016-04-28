@@ -74,4 +74,8 @@ describe 'Combinators' do
     expect(type(Fixnum).or(duck(:-)).not.call(:a_symbol)).to be true
   end
 
+  it 'matches with' do
+    matches?(5)
+    expect(with(val(5)){ true }).to be true
+  end
 end
