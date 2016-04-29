@@ -23,6 +23,7 @@ module PatternMatching
 
   def with(*matchers,&block)
   	if not self.flag
+      Binder.reset
   	  if matchers.all? do |matcher| matcher.call(self.object) end
   	    self.flag= true
   	    self.matching_block= block
@@ -34,7 +35,7 @@ module PatternMatching
   	self.flag= false
   	self.object= x
   	block.call
-  	matching_block.call
+  	Binder.new.instance_eval &matching_block
   end
 end
 
