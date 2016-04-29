@@ -1,5 +1,5 @@
 module PatternMatching
-	attr_accessor :object, :flag
+	attr_accessor :object, :flag, :matching_block
 
   def val(value)
   	proc { |param| param == value }
@@ -25,7 +25,7 @@ module PatternMatching
   	if not self.flag
   	  if matchers.all? do |matcher| matcher.call(self.object) end
   	    self.flag= true
-  	    block.call
+  	    self.matching_block= block
   	  end
   	end
   end 
@@ -34,6 +34,7 @@ module PatternMatching
   	self.flag= false
   	self.object= x
   	block.call
+  	matching_block.call
   end
 end
 
