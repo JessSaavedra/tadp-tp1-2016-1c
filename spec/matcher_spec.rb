@@ -95,6 +95,24 @@ describe 'Matchers' do
   context 'Variables' do
   	it 'variable matchea siempre' do
       expect(:hola.call('string')).to be true
-  	end
+    end
+
+		it 'binder recibe variables y genera los metodos correspondientes' do
+			Binder.reset
+			Binder.add_variable(:a_number,3)
+			Binder.add_variable(:word,'hello')
+			binder = Binder.new
+
+			expect( binder.a_number ).to eq 3
+			expect( binder.word ).to eq 'hello'
+    end
+
+		it 'despues de ejecutar call sobre un simbolo, el binder asocia el metodo a su instancia' do
+			Binder.reset
+			:a_value.call(15)
+
+			expect( Binder.new.a_value ).to eq 15
+		end
+
   end
 end
