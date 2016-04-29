@@ -25,11 +25,19 @@ module PatternMatching
   	if not self.flag
       Binder.reset
   	  if matchers.all? do |matcher| matcher.call(self.object) end
-  	    self.flag= true
-  	    self.matching_block= block
+        self.matched block
   	  end
   	end
-  end 
+  end
+
+  def otherwise(&block)
+    self.matched block
+  end
+
+  def matched(block)
+    self.flag= true
+    self.matching_block= block
+  end
 
   def matches?(x,&block)
   	self.flag= false
