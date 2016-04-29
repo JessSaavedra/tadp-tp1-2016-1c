@@ -28,7 +28,14 @@ module PatternMatching
   	    self.matching_block= block
   	  end
   	end
-  end 
+  end
+
+  def otherwise(&block)
+    if not self.flag
+        self.flag= true
+        self.matching_block= block
+    end
+  end
 
   def matches?(x,&block)
   	self.flag= false
