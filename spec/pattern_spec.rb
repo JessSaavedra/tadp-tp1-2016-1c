@@ -38,4 +38,12 @@ describe 'Patterns' do
         end)
         .to eq 3
   end
+
+  it 'matches con bloque que requiere binding con string' do
+    expect(
+        matches?('text') do
+          with(type(String), :a_string) { a_string.length }
+        end)
+        .to eq 4
+  end
 end
