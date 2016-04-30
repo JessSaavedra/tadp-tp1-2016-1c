@@ -62,7 +62,19 @@ describe 'Matchers' do
 
 	it 'se llama con dos val y un type' do
 	  expect(list([val(2),type(Integer),val(3)]).call([2,5,3])).to be true
-	end
+  end
+
+	it 'lista con elementos que no son matchers se toman como val' do
+		expect(list([1,2,3]).call([1,2,3])).to be true
+  end
+
+	it 'lista con elementos simples recibe otra lista diferente y retorna false' do
+		expect(list([1,2,3]).call([1,5])).to be false
+  end
+
+	it 'lista con elementos simples y matchers' do
+		expect(list(['a',duck(:+),type(String),5],false).call(['a',2,'hola',5,Object.new])).to be true
+  end
   end
 
   context 'Duck typing' do

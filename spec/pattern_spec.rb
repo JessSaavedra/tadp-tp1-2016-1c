@@ -46,4 +46,13 @@ describe 'Patterns' do
         end)
         .to eq 4
   end
+
+  it 'matches con lista que bindea los valores' do
+    expect(
+        matches?([5,4,'text']) do
+          with(list([:a_number,type(String),:a_text])) { a_text }
+          with(list([:a_number,type(Integer),:a_text])) { a_number.to_s + a_text }
+        end)
+        .to eq '5text'
+  end
 end
