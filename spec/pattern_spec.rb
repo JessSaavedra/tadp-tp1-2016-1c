@@ -30,6 +30,14 @@ describe 'Patterns' do
     end ).to eq 'aca entro'
   end
 
+  it 'matches with and no otherwise' do
+    expect(matches?(5) do with(val(4)){ 8 }
+    with(val(5)){ 'aca entro' }
+    otherwise{ 'aca no entro' }
+    with(val(3)){ 'aca no' }
+    end ).to eq 'aca entro'
+  end
+
   it 'matches con bloque que requiere binding' do
     expect(
         matches?([1,2,3]) do
