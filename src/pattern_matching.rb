@@ -15,7 +15,7 @@ module PatternMatching
   end
 
   def otherwise(&block)
-    bloque_true = proc { 1 == 1}
+    bloque_true = proc { true }
     self.with(bloque_true,&block)
   end
 
