@@ -15,8 +15,7 @@ module PatternMatching
   end
 
   def otherwise(&block)
-    bloque_true = proc { true }
-    self.with(bloque_true,&block)
+    self.with(val(self.object),&block)
   end
 
   def matched(block)
