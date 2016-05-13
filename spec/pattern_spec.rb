@@ -63,4 +63,13 @@ describe 'Patterns' do
         end)
         .to eq '5text'
   end
+
+  it 'with que no recibe matchers ejecuta el bloque' do
+    expect(
+        matches?(1) do
+          with() { 'acá llega' }
+          with(type(Integer)) { 10 }
+        end)
+        .to eq 'acá llega'
+  end
 end

@@ -75,6 +75,18 @@ describe 'Matchers' do
 	it 'lista con elementos simples y matchers' do
 		expect(list(['a',duck(:+),type(String),5],false).call(['a',2,'hola',5,Object.new])).to be true
   end
+
+	it 'lista vacia matchea si no se requiere igual longitud' do
+		expect(list([],false).call(['a',2,'hola',5,Object.new])).to be true
+  end
+
+	it 'lista vacia matchea con lista vacía' do
+		expect(list([]).call([])).to be true
+  end
+
+	it 'lista vacia no matchea con lista que tiene elementos si se requiere igual longitud' do
+		expect(list([]).call([:a,3])).to be false
+	end
   end
 
   context 'Duck typing' do
