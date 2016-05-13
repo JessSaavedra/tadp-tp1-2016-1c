@@ -12,9 +12,9 @@ module Matchers
 
   def list(list,boolean=true) #Si no viene nada, el default es true
     if boolean # true o sin parametro
-      proc { |array| (list.size == array.size) & list.collect { |elem| wrap(elem).call(array[list.index(elem)]) }.all? }
+      proc { |array| (list.size == array.size) & list.zip(array).all? do | elem,value | wrap(elem).call(value) end }
     else
-      proc { |array| (list.size <= array.size) & list.collect { |elem| wrap(elem).call(array[list.index(elem)]) }.all? }
+      proc { |array| (list.size <= array.size) & list.zip(array).all? do | elem,value | wrap(elem).call(value) end }
     end
   end
 
